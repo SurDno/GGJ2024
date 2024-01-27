@@ -71,8 +71,11 @@ MonoBehaviour:
   syncDirection: 1
   syncMode: 0
   syncInterval: 0
-  speed: 1
+  speed: 6
+  maxFallSpeed: 9.81
+  timeToFullFallSpeed: 0.78
   movingRight: 0
+  fallSpeed: 0
 --- !u!50 &4378997098786462535
 Rigidbody2D:
   serializedVersion: 4
