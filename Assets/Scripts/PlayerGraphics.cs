@@ -8,6 +8,10 @@ public class PlayerGraphics : NetworkBehaviour {
         // Enable appropriate graphic.
         transform.Find("P1").gameObject.SetActive(secondPlayer);
         transform.Find("P2").gameObject.SetActive(!secondPlayer);
+
+        // Enable appropriate script.
+        GetComponent<FreezeRay>().enabled = secondPlayer;
+        GetComponent<GravityGun>().enabled = !secondPlayer;
     }
 
     [Server]
