@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 13312, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: floorTop
+  m_Name: ladder
   m_EditorClassIdentifier: 
-  m_Sprite: {fileID: 21300000, guid: 4eeac412e966fbe46b577aab44c9b9a0, type: 3}
+  m_Sprite: {fileID: -1897329288, guid: f7bde5124dbdcb242ada6d74650b95bf, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Transform:
     e00: 1
