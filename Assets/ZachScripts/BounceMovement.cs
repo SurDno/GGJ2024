@@ -1,14 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
+using Mirror;
 using UnityEngine;
 
-public class BounceMovement : MonoBehaviour
-{
-
+public class BounceMovement : NetworkBehaviour{
     public Rigidbody2D rb;
-    // Update is called once per frame
-    void Update()
-    {
-        rb.velocity = Vector2.up;
+
+    [Client]
+    void Start() {
+        rb.gravityScale = 0;
     }
 }

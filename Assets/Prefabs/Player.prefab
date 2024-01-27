@@ -15,6 +15,8 @@ GameObject:
   - component: {fileID: 4880136168905889463}
   - component: {fileID: 5613617933773349188}
   - component: {fileID: 2805478084176003048}
+  - component: {fileID: 6129666352876238673}
+  - component: {fileID: 5739219469038068410}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -205,6 +207,38 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
+--- !u!114 &6129666352876238673
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 763067662083101522}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01acb33d2a993004cbec8509ff75b392, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
+  iceProjectilePrefab: {fileID: 5802137747248827130, guid: f84c2269409d4b14d842cbe25ce6560c, type: 3}
+--- !u!114 &5739219469038068410
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 763067662083101522}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c58cb229c806374a8cbff002044244f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
+  heldObject: {fileID: 0}
 --- !u!1 &2759211505019444429
 GameObject:
   m_ObjectHideFlags: 0
