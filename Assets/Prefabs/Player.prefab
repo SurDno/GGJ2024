@@ -51,6 +51,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  clientStarted: 0
   sceneId: 0
   _assetId: 2470194393
   serverOnly: 0
@@ -72,10 +73,17 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0
   speed: 6
+  acceleration: 0.008
   maxFallSpeed: 9.81
-  timeToFullFallSpeed: 0.78
+  timeToFullFallSpeed: 0.7
+  maxJumpSpeed: 12
+  timeToFullJump: 0.8
   movingRight: 0
+  moving: 0
+  preparingJump: 0
+  afterJump: 0
   fallSpeed: 0
+  timer: 0
 --- !u!50 &4378997098786462535
 Rigidbody2D:
   serializedVersion: 4
@@ -119,24 +127,24 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0
   target: {fileID: 2188579207254339309}
-  clientAuthority: 0
   syncPosition: 1
   syncRotation: 0
   syncScale: 0
   interpolatePosition: 1
   interpolateRotation: 0
   interpolateScale: 0
+  coordinateSpace: 0
+  sendIntervalMultiplier: 3
+  timelineOffset: 0
   showGizmos: 0
   showOverlay: 0
   overlayColor: {r: 0, g: 0, b: 0, a: 0.5}
   onlySyncOnChange: 1
   onlySyncOnChangeCorrectionMultiplier: 2
-  sendIntervalMultiplier: 3
   rotationSensitivity: 0.01
   compressRotation: 0
   positionPrecision: 0.01
   scalePrecision: 0.01
-  timelineOffset: 0
 --- !u!61 &5613617933773349188
 BoxCollider2D:
   m_ObjectHideFlags: 0
