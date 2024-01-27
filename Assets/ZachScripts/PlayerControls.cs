@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class PlayerControls : MonoBehaviour
 {//NEEDS TO INHERIT FROM PlayerCommon
+    [Header("Common vars")]
+    public Rigidbody2D rb;
+
     [Header("For Freeze ability")]
     public GameObject iceProjectilePrefab;
     public bool isFrozen;
@@ -31,75 +34,73 @@ public class PlayerControls : MonoBehaviour
     public void FreezeObject()
     {
         var mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        GameObject freezeProjectile = Instantiate(iceProjectilePrefab, transform);
-        var direction =(transform.position - mousePos).normalized;
+        GameObject freezeProjectile = Instantiate(iceProjectilePrefab, transform.position,Quaternion.identity,transform);
+        Vector2 direction = mousePos - transform.position;
         freezeProjectile.transform.parent = null;
-       // freezeProjectile.GetComponent<FreezeProjectile>().moveDir = direction;
+       freezeProjectile.GetComponent<FreezeProjectile>().direction = direction;
 
     }
 
+    
     //Ability 3: Telepathy
     public void TelepathyStart()
     {
-
-
         //do a raycast from transform to mousePosition
         var camera = Camera.main;
 
-        var screenRay = camera.ScreenPointToRay(Input.mousePosition);
-        Vector3 selectedPoint = Vector3.zero;
+        //get mousePosition in world
+        var mousePos = (Vector2)camera.ScreenToWorldPoint(Input.mousePosition);
+        RaycastHit2D hit = Physics2D.Raycast((Vector2)transform.position, mousePos); //Currently hitting the wall first not the gameobject in front?
+        Debug.DrawRay((Vector2)transform.position, mousePos - (Vector2)transform.position, Color.blue);
         //Do 2 different types of raycasts
         //Find your heldObject -> Case: Don't have a held object yet
-        if(heldObject == null)
+        if (heldObject == null)
         {
-            if (Physics.Raycast(screenRay, out RaycastHit hit))
+            //gets the held object
+            if (hit.collider != null)
             {
-                selectedPoint = hit.point;
-                if (hit.collider != null)
+                
+                if (hit.collider.CompareTag("Pickup"))
                 {
-                    //if it isn't colliding with the held object then 
-                    if (heldObject != null && hit.collider.gameObject != heldObject)
-                    {
-                        //Drop the object
-
-                    }
-                    else
-                    {
-                        heldObject = hit.collider.gameObject;
-                    }
-
+                    heldObject = hit.collider.gameObject;
                 }
+               
             }
+
         }
         //2nd raycast is from player to heldObject -> Case: Object is behind wall so drop it
         else
         {
-            screenRay = camera.ScreenPointToRay(heldObject.transform.position);
-            if (Physics.Raycast(screenRay,out RaycastHit hit))
+            if (hit.collider != null)
             {
-                if(hit.collider != null)
+                Debug.Log(hit.collider);
+                //if it collides with something that ISNT the gameobject
+                if (hit.collider.gameObject != heldObject)
                 {
-                    //if it collides with something that ISNT the gameobject
-                    if(hit.collider.gameObject != heldObject)
-                    {
-                        //TelepathyEnd();
-                    }
+                   StartCoroutine(TelepathyEnd(heldObject, mousePos));
+                   heldObject = null;
                 }
+            }
+        }
+
+        //
+        if (heldObject != null)
+          {
+                //get the lerpDirection
+                Vector2 lerpDirection = Vector2.Lerp(heldObject.transform.position, mousePos, .3f);
+
+                //use it to calculate a velocity _> do I need to split it so it does it over .3f?
+
+                //move the rigidbody of the object#
+                heldObject.GetComponent<Rigidbody2D>().MovePosition(lerpDirection);
+            //AddForce(lerpDirection, ForceMode2D.Impulse);
+            Debug.DrawRay(transform.position, heldObject.transform.position - transform.position, Color.red);
+
         }
         
-        if(heldObject != null)
-        {
-            //
-
-
-
-            heldObject.transform.position = Vector2.Lerp(heldObject.transform.position, camera.ScreenToWorldPoint(Input.mousePosition), Time.deltaTime);
-           //heldObject.transform.position = (Vector2)camera.ScreenToWorldPoint(Input.mousePosition);
-            
-        }
-        //var originToSelectionRay = new Ray(transform.position, selectedPoint - transform.position);
-        Debug.DrawRay(transform.position, heldObject.transform.position - transform.position, Color.red);
-    }
+          
+     }
+    
 
     public IEnumerator TelepathyEnd(GameObject heldObj, Vector3 mousePos)
     {
@@ -109,8 +110,9 @@ public class PlayerControls : MonoBehaviour
             Debug.Log(distance);
             var heading = heldObj.transform.position - mousePos;
             distance = heading.magnitude;
-            heldObj.transform.position = Vector2.Lerp(heldObj.transform.position,
-              mousePos, .3f);
+            Vector2 lerpDirection = Vector2.Lerp(heldObj.transform.position,
+            mousePos, .3f);
+            heldObject.GetComponent<Rigidbody2D>().MovePosition(lerpDirection);
             yield return null;
             
         }
