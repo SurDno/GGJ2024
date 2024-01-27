@@ -81,7 +81,7 @@ public class PlayerCommon : NetworkBehaviour {
             return false;
 
         for (int i = 0; i < currentContacts.Length; i++)
-            if (currentContacts[i].collider && currentContacts[i].collider.CompareTag("Ground"))
+            if (currentContacts[i].collider && (currentContacts[i].collider.CompareTag("Ground") || currentContacts[i].collider.CompareTag("Pickup")))
                 if (Mathf.Abs(Vector2.Angle(currentContacts[i].normal, Vector2.up)) <= 45)
                     return true;
 

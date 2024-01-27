@@ -1,8 +1,11 @@
 using UnityEngine;
 using Mirror;
+using System.Collections;
 
 public class GravityGun : NetworkBehaviour {
     public GameObject heldObject;
+    private Vector2 direction;
+    private bool coolingDown;
 
     [Command]
     public void TelepathyStart(Vector2 mousePos) {
@@ -10,12 +13,14 @@ public class GravityGun : NetworkBehaviour {
         Debug.DrawRay((Vector2)transform.position, mousePos - (Vector2)transform.position, Color.blue);
 
         if (potentialTargetHit.collider != null) {
-            if (heldObject == null) {
+            if (heldObject == null && !coolingDown && !IsCollidingWithObject(potentialTargetHit.collider.gameObject)) {
                 if (potentialTargetHit.collider.CompareTag("Pickup") && !FreezeManager.Instance.IsFrozen(potentialTargetHit.collider.gameObject)) {
                     heldObject = potentialTargetHit.collider.gameObject;
                     heldObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
+                    heldObject.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+                    heldObject.GetComponent<Rigidbody2D>().gravityScale = 0;
                 }
-            } else {
+            } else if (heldObject) {
                 //create a layermask which holds all the layers to ignore (pickupables and the players)
                 LayerMask notIgnoredLayers = LayerMask.GetMask("Environment","Player2");
                 RaycastHit2D backToPlayerHit = Physics2D.Raycast(heldObject.transform.position, 
@@ -26,8 +31,11 @@ public class GravityGun : NetworkBehaviour {
                 if (backToPlayerHit.collider && backToPlayerHit.collider.gameObject != this.gameObject)
                 {
                     print(backToPlayerHit.collider.gameObject.name);
-                    if (heldObject)
+                    if (heldObject) {
                         heldObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
+                        heldObject.GetComponent<Rigidbody2D>().velocity = direction;
+                        heldObject.GetComponent<Rigidbody2D>().gravityScale = 1;
+                    }
                     heldObject = null;
                 }
             }
@@ -37,7 +45,11 @@ public class GravityGun : NetworkBehaviour {
             
             
             Vector2 lerpNextPosition = Vector2.Lerp(heldObject.transform.position, mousePos, .15f);
-            Vector2 direction = lerpNextPosition - (Vector2)heldObject.transform.position;
+            direction = mousePos - (Vector2)heldObject.transform.position;
+
+            float rotation = Mathf.Lerp(heldObject.transform.eulerAngles.z, 0, .1f * Time.deltaTime);
+            rotation = Mathf.Floor(rotation);
+            heldObject.transform.eulerAngles = new Vector3(0, 0, rotation);
 
             heldObject.GetComponent<Rigidbody2D>().MovePosition(lerpNextPosition);
 
@@ -53,24 +65,53 @@ public class GravityGun : NetworkBehaviour {
             Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             TelepathyStart(mousePos);
         } else if (Input.GetMouseButtonUp(0)) {
-            MakeNull();
+            MakeNull(true);
         }
     }
 
     [Command]
-    private void MakeNull() {
-        if(heldObject)
-           heldObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
+    private void MakeNull(bool saveDir) {
+        if (heldObject) {
+            heldObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
+            heldObject.GetComponent<Rigidbody2D>().velocity = saveDir ? direction : Vector2.zero;
+            heldObject.GetComponent<Rigidbody2D>().gravityScale = 1;
+        }
         heldObject = null;
     }
 
+    IEnumerator Cooldown() {
+        coolingDown = true;
+        yield return new WaitForSeconds(0.5f);
+        coolingDown = false;
+    }
 
+    private bool IsCollidingWithObject(GameObject obj) {
+        ContactPoint2D[] currentContacts = new ContactPoint2D[256];
+        GetComponent<Collider2D>().GetContacts(currentContacts);
+
+        if (currentContacts.Length == 0)
+            return false;
+
+        for (int i = 0; i < currentContacts.Length; i++)
+            if (currentContacts[i].collider && currentContacts[i].collider.gameObject == obj && currentContacts[i].normal.y > 0.5f)
+                return true;
+
+        return false;
+    }
+
+    [ServerCallback]
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if(collision.gameObject == heldObject)
         {
-            //Still need to stop being hit by it
-            MakeNull();
+            GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+            if (heldObject) {
+                heldObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
+                heldObject.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+                heldObject.GetComponent<Rigidbody2D>().gravityScale = 1;
+            }
+            heldObject = null;
+            //StartCoroutine(Cooldown());
         }
     }
 }
