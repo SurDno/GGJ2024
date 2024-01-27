@@ -1,37 +1,34 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using Mirror;
+using System.Collections;
 
-public class FreezeProjectile : MonoBehaviour
-{
+public class FreezeProjectile : NetworkBehaviour {
     public Vector2 direction;
     public float speedMultiplier = 5;
-    private void Start()
-    {
-        //transform.GetComponent<Rigidbody>().MovePosition(direction);
-        Debug.Log(direction);
+
+    private void Start() {
+        if (!isServer)
+            return;
+
         GetComponent<Rigidbody2D>().AddForce(direction * speedMultiplier, ForceMode2D.Impulse);
-        Destroy(gameObject, 2f);
-        //  //maybe instead a rb.move on update?
+        StartCoroutine(DestroyAfterTime());
+    }
+
+    IEnumerator DestroyAfterTime() {
+        yield return new WaitForSeconds(2f);
+        NetworkServer.Destroy(this.gameObject);
     }
 
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
+    private void OnTriggerEnter2D(Collider2D collision) {
+        if (!isServer)
+            return;
 
-        //Only colliding with player (as instantiates there, nothing else)
-        Debug.Log(collision.gameObject.tag);
-        if (collision.gameObject.CompareTag("Pickup"))
-        {
-            if (!FreezeManager.instance.frozenObjects.Contains(collision.gameObject))
-            {
-                FreezeManager.instance.StartFrozenObjectCountdown(collision.gameObject);
+        if (collision.gameObject.CompareTag("Pickup")) {
+            if (!FreezeManager.Instance.IsFrozen(collision.gameObject)) {
+                FreezeManager.Instance.StartCoroutine(FreezeManager.Instance.FrozenObjectCountdown(collision.gameObject));
             }
-            FreezeManager.instance.StartFrozenObjectCountdown(collision.gameObject);
-            Destroy(gameObject);//destroy if touches
+            NetworkServer.Destroy(gameObject);
         }
-        
     }
-    
-
 }
