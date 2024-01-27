@@ -13,19 +13,29 @@ public class GravityGun : NetworkBehaviour {
             if (heldObject == null) {
                 if (potentialTargetHit.collider.CompareTag("Pickup") && !FreezeManager.Instance.IsFrozen(potentialTargetHit.collider.gameObject)) {
                     heldObject = potentialTargetHit.collider.gameObject;
+                    heldObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
                 }
             } else {
-
-                RaycastHit2D backToPlayerHit = Physics2D.Raycast(heldObject.transform.position, transform.position - heldObject.transform.position);
+                //create a layermask which holds all the layers to ignore (pickupables and the players)
+                LayerMask notIgnoredLayers = LayerMask.GetMask("Environment","Player2");
+                RaycastHit2D backToPlayerHit = Physics2D.Raycast(heldObject.transform.position, 
+                    transform.position - heldObject.transform.position, Mathf.Infinity, notIgnoredLayers);
                 Debug.DrawRay(heldObject.transform.position, transform.position - heldObject.transform.position, Color.green);
 
-                if (backToPlayerHit.collider.gameObject != this.gameObject && !backToPlayerHit.collider.CompareTag("Pickup")) {
+                //it's colliding with other gameObjects. shouldn't it ignore it!
+                if (backToPlayerHit.collider && backToPlayerHit.collider.gameObject != this.gameObject)
+                {
+                    print(backToPlayerHit.collider.gameObject.name);
+                    if (heldObject)
+                        heldObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
                     heldObject = null;
                 }
             }
         }
 
         if (heldObject != null) {
+            
+            
             Vector2 lerpNextPosition = Vector2.Lerp(heldObject.transform.position, mousePos, .15f);
             Vector2 direction = lerpNextPosition - (Vector2)heldObject.transform.position;
 
@@ -37,6 +47,8 @@ public class GravityGun : NetworkBehaviour {
 
     }
     public void Update() {
+        if (!isLocalPlayer)
+            return;
         if (Input.GetMouseButton(0)) {
             Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             TelepathyStart(mousePos);
@@ -47,6 +59,18 @@ public class GravityGun : NetworkBehaviour {
 
     [Command]
     private void MakeNull() {
+        if(heldObject)
+           heldObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
         heldObject = null;
+    }
+
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(collision.gameObject == heldObject)
+        {
+            //Still need to stop being hit by it
+            MakeNull();
+        }
     }
 }
