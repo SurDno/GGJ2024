@@ -3,14 +3,17 @@ using Mirror;
 using System.Collections;
 
 public class GravityGun : NetworkBehaviour {
-    public GameObject heldObject;
+    [SyncVar] public GameObject heldObject;
+    [SyncVar] private Vector2 cachedMousePos;
     private Vector2 direction;
     private bool coolingDown;
 
     [Command]
     public void TelepathyStart(Vector2 mousePos) {
-        RaycastHit2D potentialTargetHit = Physics2D.Raycast((Vector2)transform.position, mousePos - (Vector2)transform.position);
-        Debug.DrawRay((Vector2)transform.position, mousePos - (Vector2)transform.position, Color.blue);
+        cachedMousePos = mousePos;
+
+        float dist = (mousePos - (Vector2)transform.position).magnitude;
+        RaycastHit2D potentialTargetHit = Physics2D.Raycast((Vector2)transform.position, mousePos - (Vector2)transform.position, dist);
 
         if (potentialTargetHit.collider != null) {
             if (heldObject == null && !coolingDown && !IsCollidingWithObject(potentialTargetHit.collider.gameObject)) {
@@ -30,7 +33,6 @@ public class GravityGun : NetworkBehaviour {
                 //it's colliding with other gameObjects. shouldn't it ignore it!
                 if (backToPlayerHit.collider && backToPlayerHit.collider.gameObject != this.gameObject)
                 {
-                    print(backToPlayerHit.collider.gameObject.name);
                     if (heldObject) {
                         heldObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
                         heldObject.GetComponent<Rigidbody2D>().velocity = direction;
@@ -58,7 +60,23 @@ public class GravityGun : NetworkBehaviour {
 
 
     }
+
+    private void DrawRay() {
+        LineRenderer lineRenderer = GetComponent<LineRenderer>();
+        lineRenderer.enabled = Input.GetMouseButton(0);
+
+        if(heldObject != null)
+            cachedMousePos = heldObject.transform.position;
+
+        if (lineRenderer.enabled) {
+            lineRenderer.SetPosition(0, transform.position);
+            lineRenderer.SetPosition(1, cachedMousePos);
+        }
+    }
+
     public void Update() {
+        DrawRay();
+
         if (!isLocalPlayer)
             return;
         if (Input.GetMouseButton(0)) {
