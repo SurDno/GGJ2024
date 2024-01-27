@@ -12,6 +12,8 @@ public class PlayerGraphics : NetworkBehaviour {
         // Enable appropriate script.
         GetComponent<FreezeRay>().enabled = secondPlayer;
         GetComponent<GravityGun>().enabled = !secondPlayer;
+
+        gameObject.layer = secondPlayer ? LayerMask.NameToLayer("Player1") : LayerMask.NameToLayer("Player2");
     }
 
     [Server]
