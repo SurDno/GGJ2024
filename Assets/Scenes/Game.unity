@@ -413,7 +413,7 @@ GameObject:
   m_Layer: 0
   m_Name: L2Cp1
   m_TagString: CheckPoint
-  m_Icon: {fileID: 2974397684917235467, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 2488908585195742037, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -3423,7 +3423,7 @@ GameObject:
   m_Layer: 0
   m_Name: L1Cp2
   m_TagString: CheckPoint
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 2488908585195742037, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -5637,6 +5637,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 2008022103}
     m_Modifications:
     - target: {fileID: 3320912151869743657, guid: a97ac4b78f8ab3744bc56e29d1bd4b46, type: 3}
+      propertyPath: m_Icon
+      value: 
+      objectReference: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
+    - target: {fileID: 3320912151869743657, guid: a97ac4b78f8ab3744bc56e29d1bd4b46, type: 3}
       propertyPath: m_Name
       value: L1Cp3LC
       objectReference: {fileID: 0}
@@ -5693,6 +5697,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2008022103}
     m_Modifications:
+    - target: {fileID: 109000817758003181, guid: 1629eae3bff9b4a4f95578e104b29a6f, type: 3}
+      propertyPath: m_Icon
+      value: 
+      objectReference: {fileID: 2488908585195742037, guid: 0000000000000000d000000000000000, type: 0}
     - target: {fileID: 109000817758003181, guid: 1629eae3bff9b4a4f95578e104b29a6f, type: 3}
       propertyPath: m_Name
       value: L1Cp1
