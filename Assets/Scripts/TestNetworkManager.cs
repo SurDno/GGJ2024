@@ -12,7 +12,7 @@ public class TestNetworkManager  : NetworkManager {
         i = this;
     }
     public override void OnServerAddPlayer(NetworkConnectionToClient conn) {
-        GameObject player = Instantiate(playerOnePrefab, Vector3.zero, Quaternion.identity);
+        GameObject player = Instantiate(playerOnePrefab, new Vector2(-6.25f, 0), Quaternion.identity);
         NetworkServer.AddPlayerForConnection(conn, player);
 
         player.GetComponent<PlayerGraphics>().SetSecondPlayer(numPlayers == 1);
