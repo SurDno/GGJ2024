@@ -5,14 +5,17 @@ using System.Collections;
 public class GravityGun : NetworkBehaviour {
     [SyncVar] public GameObject heldObject;
     [SyncVar] private Vector2 cachedMousePos;
+    [SyncVar] private bool holding;
     private Vector2 direction;
 
     [Command]
     public void TelepathyStart(Vector2 mousePos) {
+        holding = true;
         cachedMousePos = mousePos;
 
+        LayerMask ignoredLayer = LayerMask.GetMask("Checkpoint");
         float dist = (mousePos - (Vector2)transform.position).magnitude;
-        RaycastHit2D potentialTargetHit = Physics2D.Raycast((Vector2)transform.position, mousePos - (Vector2)transform.position, dist);
+        RaycastHit2D potentialTargetHit = Physics2D.Raycast((Vector2)transform.position, mousePos - (Vector2)transform.position, dist, ~ignoredLayer);
 
         if (potentialTargetHit.collider != null) {
             cachedMousePos = potentialTargetHit.point;
@@ -67,7 +70,7 @@ public class GravityGun : NetworkBehaviour {
 
     private void DrawRay() {
         LineRenderer lineRenderer = GetComponent<LineRenderer>();
-        lineRenderer.enabled = Input.GetMouseButton(0);
+        lineRenderer.enabled = holding;
 
         if(heldObject != null)
             cachedMousePos = heldObject.transform.position;
@@ -79,15 +82,16 @@ public class GravityGun : NetworkBehaviour {
     }
 
     public void Update() {
-        if (GetComponent<PlayerCommon>().GetRespawning() || FreezeManager.Instance.IsFrozen(this.gameObject)) {
-            MakeNull(false);
-            return;
-        }
-
         DrawRay();
 
         if (!isLocalPlayer)
             return;
+
+        if (GetComponent<PlayerCommon>().GetRespawning() || FreezeManager.Instance.IsFrozen(this.gameObject) || FreezeManager.Instance.IsFrozen(heldObject)) {
+            MakeNull(false);
+            return;
+        }
+
         if (Input.GetMouseButton(0)) {
             Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             TelepathyStart(mousePos);
@@ -98,6 +102,7 @@ public class GravityGun : NetworkBehaviour {
 
     [Command]
     private void MakeNull(bool saveDir) {
+        holding = false;
         if (heldObject) {
             heldObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
             heldObject.GetComponent<Rigidbody2D>().velocity = saveDir ? direction : Vector2.zero;

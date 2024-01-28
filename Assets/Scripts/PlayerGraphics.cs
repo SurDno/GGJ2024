@@ -20,8 +20,12 @@ public class PlayerGraphics : NetworkBehaviour {
         GetComponent<GravityGun>().enabled = secondPlayer;
 
         gameObject.layer = !secondPlayer ? LayerMask.NameToLayer("Player1") : LayerMask.NameToLayer("Player2");
+        gameObject.tag = !secondPlayer ? "Player1" : "Player2";
     }
     private void Update() {
+        if (!isLocalPlayer)
+            return;
+
         float angleDefault = Quaternion.Angle(target.transform.rotation, Quaternion.Euler(0f, 0, 0f));
         float angleFlipped = Quaternion.Angle(target.transform.rotation, Quaternion.Euler(0f, 0, 180f));
 
@@ -33,5 +37,5 @@ public class PlayerGraphics : NetworkBehaviour {
     }
 
     [Server]
-    public void SetSecondPlayer(bool value) => secondPlayer = value;
+    public void SetSecondPlayer(bool value) => secondPlayer = !value;
 }

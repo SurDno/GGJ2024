@@ -5,8 +5,8 @@ public class FreezeRay : NetworkBehaviour {
     public GameObject iceProjectilePrefab;
     public void FreezeObject() {
         var mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Vector2 direction = mousePos - transform.position;
-        SpawnProjectile(direction);
+        Vector2 direction = (mousePos - transform.position).normalized;
+        SpawnProjectile(direction * 3);
     }
 
 

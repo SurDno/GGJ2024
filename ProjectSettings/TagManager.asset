@@ -9,6 +9,10 @@ TagManager:
   - Danger
   - CheckPoint
   - LevelEndCheckPoint
+  - Player1
+  - Player2
+  - FreezableGround
+  - Door
   layers:
   - Default
   - TransparentFX

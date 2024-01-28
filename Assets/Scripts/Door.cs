@@ -1,24 +1,17 @@
-using Mirror;
-using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics.Contracts;
 using UnityEngine;
+using Mirror;
 
-public class Door : MonoBehaviour
-{
-    public Animator anim;
+public class Door : NetworkBehaviour {
 
-
-    private void Update()
-    {
-      
-    }
+    [Server]
     public void Open(bool isOpening)
     {
-        anim.SetBool("isOpening", isOpening);
-        
-       
+        OpenOnClients(isOpening);
     }
 
-    
+    [ClientRpc] 
+    public void OpenOnClients(bool isOpening) {
+        GetComponentInChildren<Animator>().SetBool("isOpening", isOpening);
+        GetComponentInChildren<Collider2D>().enabled = !isOpening;
+    }
 }

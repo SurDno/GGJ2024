@@ -35,11 +35,10 @@ public class PlayerCommon : NetworkBehaviour {
         if (!isLocalPlayer)
             return;
 
-        if (isRespawning)
+        if (isRespawning || FreezeManager.Instance.IsFrozen(this.gameObject)) {
+            rb.velocity = Vector2.zero;
             return;
-
-        if (FreezeManager.Instance.IsFrozen(this.gameObject))
-            return;
+        }
 
         if (Input.GetKey(KeyCode.H)) { StartCoroutine(Respawn()); }
         if (Input.GetKey(KeyCode.Space) && !preparingJump && IsGrounded())
@@ -88,7 +87,8 @@ public class PlayerCommon : NetworkBehaviour {
             return false;
 
         for (int i = 0; i < currentContacts.Length; i++)
-            if (currentContacts[i].collider && (currentContacts[i].collider.CompareTag("Ground") || currentContacts[i].collider.CompareTag("Pickup")))
+            if (currentContacts[i].collider && (currentContacts[i].collider.CompareTag("Ground") || currentContacts[i].collider.CompareTag("Pickup")
+                || currentContacts[i].collider.CompareTag("FreezableGround")))
                 if (Mathf.Abs(Vector2.Angle(currentContacts[i].normal, Vector2.up)) <= 45)
                     return true;
 
@@ -109,7 +109,7 @@ public class PlayerCommon : NetworkBehaviour {
         for (int i = 0; i < 7; i++)
         {
             if (i == 2)
-                MoveToNextCheckpoint();
+                transform.position = CheckPoints.lastCheckpointPosShared;
 
             spriteRenderer.enabled = false;
             yield return new WaitForSeconds(.1f);
@@ -119,19 +119,8 @@ public class PlayerCommon : NetworkBehaviour {
         isRespawning = false;
     }
 
-    public void MoveToNextCheckpoint(bool movingLevel = false)
-    {
-        transform.position = CheckPoints.Instance.GetCurrentCheckPoint();
-        if (movingLevel)
-        {
-            CheckPoints.Instance.ChangeCameraPosition();
-            //Move camera to next position in cameraPosition
-        }
-    }
-
     [ServerCallback]
     private void OnCollisionEnter2D(Collision2D collision) {
-        Debug.Log(collision.contacts[0].normal.y);
         if (collision.gameObject.CompareTag("Pickup") && collision.contacts[0].normal.y < -0.5f) {
             RespawnOnClients();
         }
@@ -143,19 +132,6 @@ public class PlayerCommon : NetworkBehaviour {
         
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject.CompareTag("CheckPoint"))
-        {
-            CheckPoints.Instance.UpdateCheckPoint();
-        }
-        if (collision.gameObject.CompareTag("LevelEndCheckPoint"))
-        {
-            CheckPoints.Instance.UpdateCheckPoint();
-            MoveToNextCheckpoint(true);
-
-        }
-    }
 
     public bool GetRespawning() => isRespawning;
 }

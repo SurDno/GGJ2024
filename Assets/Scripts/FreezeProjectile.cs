@@ -24,7 +24,7 @@ public class FreezeProjectile : NetworkBehaviour {
         if (!isServer)
             return;
 
-        if (collision.gameObject.CompareTag("Pickup") || collision.gameObject.CompareTag("Player2")) {
+        if (collision.gameObject.CompareTag("Pickup") || collision.gameObject.CompareTag("Player2") || collision.gameObject.CompareTag("FreezableGround")) {
             if (!FreezeManager.Instance.IsFrozen(collision.gameObject)) {
                 FreezeManager.Instance.StartCoroutine(FreezeManager.Instance.FrozenObjectCountdown(collision.gameObject));
             }

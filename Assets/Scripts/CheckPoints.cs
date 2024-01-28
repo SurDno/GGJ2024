@@ -1,43 +1,27 @@
-using System.Collections;
-using System.Collections.Generic;
+using Mirror;
 using UnityEngine;
 
-public class CheckPoints : MonoBehaviour
-{
-    public static CheckPoints Instance;
-    //make this a singleton so players can get instance of it?
-    private void Awake()
-    {
-        if(Instance == null)
-        {
-            Instance = this;
-        }
-        else
-        {
-            Destroy(this);
-        }
-    }
-    public Transform[] checkPoints;
+public class CheckPoints : NetworkBehaviour {
+    [SyncVar] public Vector3 lastCheckpointPos;
+    public static Vector3 lastCheckpointPosShared;
+    [SerializeField] private bool nextLevel;
+    [SerializeField] private Transform newCamPos;
+
     public Transform[] cameraLevelPositions;
-    public int checkPointIndex; //where the respawn point is!
     public int cameraLevelPositionIndex;
 
-    public void UpdateCheckPoint()
-    {
-        checkPoints[checkPointIndex].gameObject.GetComponent<Collider2D>().enabled = false; //disable trigger
-        checkPointIndex++;
+    [ServerCallback]
+    private void OnTriggerEnter2D(Collider2D collision) {
+        lastCheckpointPosShared = transform.position;
 
+        if (nextLevel)
+            Camera.main.transform.position = newCamPos.position;
     }
 
-    public Vector2 GetCurrentCheckPoint()
-    {
-        return checkPoints[checkPointIndex].position;
+    private void Update() {
+        if (isServer)
+            lastCheckpointPos = lastCheckpointPosShared;
+        else
+            lastCheckpointPosShared = lastCheckpointPos;
     }
-
-    public void ChangeCameraPosition()
-    {
-        cameraLevelPositionIndex++;
-        Camera.main.transform.position = cameraLevelPositions[cameraLevelPositionIndex].position;
-    }
-
 }
