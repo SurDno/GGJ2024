@@ -135,19 +135,27 @@ public class PlayerCommon : NetworkBehaviour {
         if (collision.gameObject.CompareTag("Pickup") && collision.contacts[0].normal.y < -0.5f) {
             RespawnOnClients();
         }
-        if (collision.gameObject.CompareTag("CheckPoint"))
-        {
-            CheckPoints.Instance.UpdateCheckPoint();
-        }
+        
         if (collision.gameObject.CompareTag("Danger"))
         {
             RespawnOnClients();
+        }
+        
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("CheckPoint"))
+        {
+            CheckPoints.Instance.UpdateCheckPoint();
         }
         if (collision.gameObject.CompareTag("LevelEndCheckPoint"))
         {
             CheckPoints.Instance.UpdateCheckPoint();
             MoveToNextCheckpoint(true);
-            
+
         }
     }
+
+    public bool GetRespawning() => isRespawning;
 }

@@ -6,6 +6,9 @@ TagManager:
   tags:
   - Pickup
   - Ground
+  - Danger
+  - CheckPoint
+  - LevelEndCheckPoint
   layers:
   - Default
   - TransparentFX

@@ -24,6 +24,7 @@ public class CheckPoints : MonoBehaviour
 
     public void UpdateCheckPoint()
     {
+        checkPoints[checkPointIndex].gameObject.GetComponent<Collider2D>().enabled = false; //disable trigger
         checkPointIndex++;
 
     }
