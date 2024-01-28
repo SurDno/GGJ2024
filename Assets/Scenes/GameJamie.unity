@@ -151,6 +151,10 @@ PrefabInstance:
       propertyPath: moveDelay
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1469770164407492475, guid: 3136d8f904d66b841ba0e459e09cbd4c, type: 3}
+      propertyPath: sceneId
+      value: 357325359
+      objectReference: {fileID: 0}
     - target: {fileID: 1703616716954966041, guid: 3136d8f904d66b841ba0e459e09cbd4c, type: 3}
       propertyPath: m_LocalScale.x
       value: 2
@@ -555,6 +559,10 @@ PrefabInstance:
       propertyPath: affectedDoors.Array.data[0]
       value: 
       objectReference: {fileID: 1027827210}
+    - target: {fileID: 5527016964289431562, guid: 74748567eff9d5844a4f8292beaa5f3a, type: 3}
+      propertyPath: sceneId
+      value: 2051415326
+      objectReference: {fileID: 0}
     - target: {fileID: 7972797656430171263, guid: 74748567eff9d5844a4f8292beaa5f3a, type: 3}
       propertyPath: m_Name
       value: DepressButton
@@ -587,6 +595,10 @@ PrefabInstance:
     - target: {fileID: 1015030290870005962, guid: 3136d8f904d66b841ba0e459e09cbd4c, type: 3}
       propertyPath: p2.y
       value: -0.08
+      objectReference: {fileID: 0}
+    - target: {fileID: 1469770164407492475, guid: 3136d8f904d66b841ba0e459e09cbd4c, type: 3}
+      propertyPath: sceneId
+      value: 393075830
       objectReference: {fileID: 0}
     - target: {fileID: 1703616716954966041, guid: 3136d8f904d66b841ba0e459e09cbd4c, type: 3}
       propertyPath: m_LocalScale.x
@@ -754,6 +766,10 @@ PrefabInstance:
     - target: {fileID: 1015030290870005962, guid: 3136d8f904d66b841ba0e459e09cbd4c, type: 3}
       propertyPath: moveDelay
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1469770164407492475, guid: 3136d8f904d66b841ba0e459e09cbd4c, type: 3}
+      propertyPath: sceneId
+      value: 3626467624
       objectReference: {fileID: 0}
     - target: {fileID: 1703616716954966041, guid: 3136d8f904d66b841ba0e459e09cbd4c, type: 3}
       propertyPath: m_LocalScale.x
@@ -1831,6 +1847,10 @@ PrefabInstance:
       propertyPath: p2.y
       value: -0.87
       objectReference: {fileID: 0}
+    - target: {fileID: 1469770164407492475, guid: 3136d8f904d66b841ba0e459e09cbd4c, type: 3}
+      propertyPath: sceneId
+      value: 2639989912
+      objectReference: {fileID: 0}
     - target: {fileID: 1703616716954966041, guid: 3136d8f904d66b841ba0e459e09cbd4c, type: 3}
       propertyPath: m_LocalScale.x
       value: 4
@@ -2219,6 +2239,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6047155166594700425, guid: 85daf6062dd194548a9fb5db33baecb1, type: 3}
+      propertyPath: sceneId
+      value: 3601967199
+      objectReference: {fileID: 0}
     - target: {fileID: 6374887842957377182, guid: 85daf6062dd194548a9fb5db33baecb1, type: 3}
       propertyPath: m_Name
       value: Door (2)
@@ -2465,14 +2489,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef2ae666060ef784a8f1fa8210ea4baa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  checkPoints:
-  - {fileID: 735541968}
-  - {fileID: 1509917778}
-  - {fileID: 135960533}
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
+  lastCheckpointPos: {x: 0, y: 0, z: 0}
+  nextLevel: 0
+  newCamPos: {fileID: 0}
   cameraLevelPositions:
   - {fileID: 1250989331}
   - {fileID: 1815550448}
-  checkPointIndex: 0
   cameraLevelPositionIndex: 0
 --- !u!4 &709273939
 Transform:
@@ -2597,6 +2622,10 @@ PrefabInstance:
     - target: {fileID: 1015030290870005962, guid: 3136d8f904d66b841ba0e459e09cbd4c, type: 3}
       propertyPath: moveDelay
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1469770164407492475, guid: 3136d8f904d66b841ba0e459e09cbd4c, type: 3}
+      propertyPath: sceneId
+      value: 2614637338
       objectReference: {fileID: 0}
     - target: {fileID: 1703616716954966041, guid: 3136d8f904d66b841ba0e459e09cbd4c, type: 3}
       propertyPath: m_LocalScale.x
@@ -2789,6 +2818,10 @@ PrefabInstance:
     - target: {fileID: 3182182576820573059, guid: 85daf6062dd194548a9fb5db33baecb1, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6047155166594700425, guid: 85daf6062dd194548a9fb5db33baecb1, type: 3}
+      propertyPath: sceneId
+      value: 389124508
       objectReference: {fileID: 0}
     - target: {fileID: 6374887842957377182, guid: 85daf6062dd194548a9fb5db33baecb1, type: 3}
       propertyPath: m_Name
@@ -3205,6 +3238,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6047155166594700425, guid: 85daf6062dd194548a9fb5db33baecb1, type: 3}
+      propertyPath: sceneId
+      value: 404670396
+      objectReference: {fileID: 0}
     - target: {fileID: 6374887842957377182, guid: 85daf6062dd194548a9fb5db33baecb1, type: 3}
       propertyPath: m_Name
       value: Door
@@ -3396,6 +3433,7 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
+  freezeImage: {fileID: 0}
   freezeTime: 5
 --- !u!4 &1088220755
 Transform:
@@ -3701,6 +3739,10 @@ PrefabInstance:
       propertyPath: moveDelay
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1469770164407492475, guid: 3136d8f904d66b841ba0e459e09cbd4c, type: 3}
+      propertyPath: sceneId
+      value: 2456207248
+      objectReference: {fileID: 0}
     - target: {fileID: 1703616716954966041, guid: 3136d8f904d66b841ba0e459e09cbd4c, type: 3}
       propertyPath: m_LocalScale.x
       value: 2
@@ -3811,6 +3853,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6047155166594700425, guid: 85daf6062dd194548a9fb5db33baecb1, type: 3}
+      propertyPath: sceneId
+      value: 676695118
+      objectReference: {fileID: 0}
     - target: {fileID: 6374887842957377182, guid: 85daf6062dd194548a9fb5db33baecb1, type: 3}
       propertyPath: m_Name
       value: Door (1)
@@ -3920,6 +3966,10 @@ PrefabInstance:
     - target: {fileID: 1015030290870005962, guid: 3136d8f904d66b841ba0e459e09cbd4c, type: 3}
       propertyPath: p2.y
       value: -1.71
+      objectReference: {fileID: 0}
+    - target: {fileID: 1469770164407492475, guid: 3136d8f904d66b841ba0e459e09cbd4c, type: 3}
+      propertyPath: sceneId
+      value: 4033526271
       objectReference: {fileID: 0}
     - target: {fileID: 1703616716954966041, guid: 3136d8f904d66b841ba0e459e09cbd4c, type: 3}
       propertyPath: m_LocalScale.x
@@ -4349,6 +4399,10 @@ PrefabInstance:
       propertyPath: affectedDoors.Array.data[0]
       value: 
       objectReference: {fileID: 881319291}
+    - target: {fileID: 5527016964289431562, guid: 74748567eff9d5844a4f8292beaa5f3a, type: 3}
+      propertyPath: sceneId
+      value: 857180342
+      objectReference: {fileID: 0}
     - target: {fileID: 7972797656430171263, guid: 74748567eff9d5844a4f8292beaa5f3a, type: 3}
       propertyPath: m_Name
       value: DepressButton (1)
@@ -5650,6 +5704,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1469770164407492475, guid: 3136d8f904d66b841ba0e459e09cbd4c, type: 3}
+      propertyPath: sceneId
+      value: 2644339395
+      objectReference: {fileID: 0}
     - target: {fileID: 1703616716954966041, guid: 3136d8f904d66b841ba0e459e09cbd4c, type: 3}
       propertyPath: m_LocalPosition.x
       value: -16.780003
@@ -5753,6 +5811,10 @@ PrefabInstance:
     - target: {fileID: 1015030290870005962, guid: 3136d8f904d66b841ba0e459e09cbd4c, type: 3}
       propertyPath: p2.y
       value: 0.65
+      objectReference: {fileID: 0}
+    - target: {fileID: 1469770164407492475, guid: 3136d8f904d66b841ba0e459e09cbd4c, type: 3}
+      propertyPath: sceneId
+      value: 1580844044
       objectReference: {fileID: 0}
     - target: {fileID: 1703616716954966041, guid: 3136d8f904d66b841ba0e459e09cbd4c, type: 3}
       propertyPath: m_LocalScale.x
@@ -6379,6 +6441,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5527016964289431562, guid: 74748567eff9d5844a4f8292beaa5f3a, type: 3}
+      propertyPath: sceneId
+      value: 1672916543
+      objectReference: {fileID: 0}
     - target: {fileID: 7972797656430171263, guid: 74748567eff9d5844a4f8292beaa5f3a, type: 3}
       propertyPath: m_Name
       value: DepressButton (1)
@@ -6435,6 +6501,10 @@ PrefabInstance:
     - target: {fileID: 3704843115353658257, guid: 74748567eff9d5844a4f8292beaa5f3a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5527016964289431562, guid: 74748567eff9d5844a4f8292beaa5f3a, type: 3}
+      propertyPath: sceneId
+      value: 3088207663
       objectReference: {fileID: 0}
     - target: {fileID: 7972797656430171263, guid: 74748567eff9d5844a4f8292beaa5f3a, type: 3}
       propertyPath: m_Name
