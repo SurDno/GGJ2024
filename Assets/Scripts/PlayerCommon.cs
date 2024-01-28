@@ -99,9 +99,7 @@ public class PlayerCommon : NetworkBehaviour {
     public void StartRespawn() => RespawnOnClients();
 
     [ClientRpc]
-    private void RespawnOnClients() {
-        StartCoroutine(Respawn());
-    }
+    private void RespawnOnClients() => StartCoroutine(Respawn());
 
     public IEnumerator Respawn() {
         SpriteRenderer spriteRenderer = gameObject.GetComponentInChildren<SpriteRenderer>();
@@ -119,5 +117,14 @@ public class PlayerCommon : NetworkBehaviour {
             yield return new WaitForSeconds(.1f);
         }
         isRespawning = false;
+    }
+
+
+    [ServerCallback]
+    private void OnCollisionEnter2D(Collision2D collision) {
+        Debug.Log(collision.contacts[0].normal.y);
+        if (collision.gameObject.CompareTag("Pickup") && collision.contacts[0].normal.y < -0.5f) {
+            RespawnOnClients();
+        }
     }
 }
