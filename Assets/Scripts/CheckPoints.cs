@@ -5,6 +5,7 @@ public class CheckPoints : NetworkBehaviour {
     [SyncVar] public Vector3 lastCheckpointPos;
     public static Vector3 lastCheckpointPosShared;
     [SerializeField] private bool nextLevel;
+    [SerializeField] private Transform nextLevelCheckpoint;
     [SerializeField] private Transform newCamPos;
 
     public Transform[] cameraLevelPositions;
@@ -15,7 +16,12 @@ public class CheckPoints : NetworkBehaviour {
         lastCheckpointPosShared = transform.position;
 
         if (nextLevel)
+        {
             Camera.main.transform.position = newCamPos.position;
+            lastCheckpointPosShared = nextLevelCheckpoint.position;
+            collision.transform.position = nextLevelCheckpoint.position;
+        }
+            
     }
 
     private void Update() {
