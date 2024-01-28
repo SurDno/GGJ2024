@@ -141,7 +141,7 @@ public class PlayerCommon : NetworkBehaviour {
         }
         if (collision.gameObject.CompareTag("Danger"))
         {
-            Respawn();
+            RespawnOnClients();
         }
         if (collision.gameObject.CompareTag("LevelEndCheckPoint"))
         {
