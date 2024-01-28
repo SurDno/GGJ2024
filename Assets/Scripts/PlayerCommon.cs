@@ -34,9 +34,13 @@ public class PlayerCommon : NetworkBehaviour {
         // Don't run any code for non-local player.
         if (!isLocalPlayer)
             return;
+
         if (isRespawning)
             return;
-        //for testing:
+
+        if (FreezeManager.Instance.IsFrozen(this.gameObject))
+            return;
+
         if (Input.GetKey(KeyCode.H)) { StartCoroutine(Respawn()); }
         if (Input.GetKey(KeyCode.Space) && !preparingJump && IsGrounded())
             StartCoroutine(PrepareJump());
@@ -91,26 +95,36 @@ public class PlayerCommon : NetworkBehaviour {
         return false;
     }
 
+    [Command]
+    public void StartRespawn() => RespawnOnClients();
 
-    public void CheckingForDeath()
-    {
+    [ClientRpc]
+    private void RespawnOnClients() => StartCoroutine(Respawn());
 
-    }
-    public IEnumerator Respawn()
-    {
-        //if died, turn sprite render off, make them unable to do anything and then put their position on respawn point
-        isRespawning = true;
+    public IEnumerator Respawn() {
         SpriteRenderer spriteRenderer = gameObject.GetComponentInChildren<SpriteRenderer>();
+        rb.velocity = Vector2.zero;
 
-        transform.position = GameObject.Find("RespawnPoint").transform.position;
-        for (int i = 0; i < 15; i++)
+        isRespawning = true;
+        for (int i = 0; i < 7; i++)
         {
+            if(i == 2)
+                transform.position = GameObject.Find("RespawnPoint").transform.position;
+
             spriteRenderer.enabled = false;
-            yield return new WaitForSeconds(.2f);
+            yield return new WaitForSeconds(.1f);
             spriteRenderer.enabled = true;
+            yield return new WaitForSeconds(.1f);
         }
-        spriteRenderer.enabled = true;
         isRespawning = false;
-        yield return null;
+    }
+
+
+    [ServerCallback]
+    private void OnCollisionEnter2D(Collision2D collision) {
+        Debug.Log(collision.contacts[0].normal.y);
+        if (collision.gameObject.CompareTag("Pickup") && collision.contacts[0].normal.y < -0.5f) {
+            RespawnOnClients();
+        }
     }
 }

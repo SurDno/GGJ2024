@@ -6,8 +6,10 @@ public class PlayerGraphics : NetworkBehaviour {
 
     private void Start() {
         // Enable appropriate graphic.
-        transform.Find("P1").gameObject.SetActive(secondPlayer);
-        transform.Find("P2").gameObject.SetActive(!secondPlayer);
+        if (secondPlayer)
+            Destroy(transform.Find("P2").gameObject);
+        else
+            Destroy(transform.Find("P1").gameObject);
 
         // Enable appropriate script.
         GetComponent<FreezeRay>().enabled = !secondPlayer;

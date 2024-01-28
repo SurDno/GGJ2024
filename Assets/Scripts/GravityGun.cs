@@ -6,7 +6,6 @@ public class GravityGun : NetworkBehaviour {
     [SyncVar] public GameObject heldObject;
     [SyncVar] private Vector2 cachedMousePos;
     private Vector2 direction;
-    private bool coolingDown;
 
     [Command]
     public void TelepathyStart(Vector2 mousePos) {
@@ -16,7 +15,8 @@ public class GravityGun : NetworkBehaviour {
         RaycastHit2D potentialTargetHit = Physics2D.Raycast((Vector2)transform.position, mousePos - (Vector2)transform.position, dist);
 
         if (potentialTargetHit.collider != null) {
-            if (heldObject == null && !coolingDown && !IsCollidingWithObject(potentialTargetHit.collider.gameObject)) {
+            cachedMousePos = potentialTargetHit.point;
+            if (heldObject == null && !IsCollidingWithObject(potentialTargetHit.collider.gameObject)) {
                 if (potentialTargetHit.collider.CompareTag("Pickup") && !FreezeManager.Instance.IsFrozen(potentialTargetHit.collider.gameObject)) {
                     heldObject = potentialTargetHit.collider.gameObject;
                     heldObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
@@ -97,12 +97,6 @@ public class GravityGun : NetworkBehaviour {
         heldObject = null;
     }
 
-    IEnumerator Cooldown() {
-        coolingDown = true;
-        yield return new WaitForSeconds(0.5f);
-        coolingDown = false;
-    }
-
     private bool IsCollidingWithObject(GameObject obj) {
         ContactPoint2D[] currentContacts = new ContactPoint2D[256];
         GetComponent<Collider2D>().GetContacts(currentContacts);
@@ -129,7 +123,6 @@ public class GravityGun : NetworkBehaviour {
                 heldObject.GetComponent<Rigidbody2D>().gravityScale = 1;
             }
             heldObject = null;
-            //StartCoroutine(Cooldown());
         }
     }
 }
