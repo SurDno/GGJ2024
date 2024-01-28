@@ -22,7 +22,7 @@ public class PlayerCommon : NetworkBehaviour {
     [SerializeField] private float timeToFullJump = 1f;
 
     [Header("Current Values")]
-    [SerializeField][SyncVar] private bool movingRight, moving, preparingJump, afterJump;
+    [SerializeField][SyncVar] private bool movingRight, moving, preparingJump, afterJump, isRespawning;
     [SerializeField] private float fallSpeed, timer;
 
     private void Start() {
@@ -34,7 +34,10 @@ public class PlayerCommon : NetworkBehaviour {
         // Don't run any code for non-local player.
         if (!isLocalPlayer)
             return;
-
+        if (isRespawning)
+            return;
+        //for testing:
+        if (Input.GetKey(KeyCode.H)) { StartCoroutine(Respawn()); }
         if (Input.GetKey(KeyCode.Space) && !preparingJump && IsGrounded())
             StartCoroutine(PrepareJump());
 
@@ -86,5 +89,28 @@ public class PlayerCommon : NetworkBehaviour {
                     return true;
 
         return false;
+    }
+
+
+    public void CheckingForDeath()
+    {
+
+    }
+    public IEnumerator Respawn()
+    {
+        //if died, turn sprite render off, make them unable to do anything and then put their position on respawn point
+        isRespawning = true;
+        SpriteRenderer spriteRenderer = gameObject.GetComponentInChildren<SpriteRenderer>();
+
+        transform.position = GameObject.Find("RespawnPoint").transform.position;
+        for (int i = 0; i < 15; i++)
+        {
+            spriteRenderer.enabled = false;
+            yield return new WaitForSeconds(.2f);
+            spriteRenderer.enabled = true;
+        }
+        spriteRenderer.enabled = true;
+        isRespawning = false;
+        yield return null;
     }
 }
