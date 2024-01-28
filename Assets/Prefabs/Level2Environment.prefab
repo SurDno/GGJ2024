@@ -179,6 +179,10 @@ PrefabInstance:
       propertyPath: p2.y
       value: 0.65
       objectReference: {fileID: 0}
+    - target: {fileID: 1469770164407492475, guid: 3136d8f904d66b841ba0e459e09cbd4c, type: 3}
+      propertyPath: _assetId
+      value: 1594145592
+      objectReference: {fileID: 0}
     - target: {fileID: 1703616716954966041, guid: 3136d8f904d66b841ba0e459e09cbd4c, type: 3}
       propertyPath: m_LocalScale.x
       value: 4
@@ -371,6 +375,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6047155166594700425, guid: 85daf6062dd194548a9fb5db33baecb1, type: 3}
+      propertyPath: _assetId
+      value: 1594145592
+      objectReference: {fileID: 0}
     - target: {fileID: 6374887842957377182, guid: 85daf6062dd194548a9fb5db33baecb1, type: 3}
       propertyPath: m_Name
       value: Door (1)
@@ -562,6 +570,10 @@ PrefabInstance:
       propertyPath: moveDelay
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1469770164407492475, guid: 3136d8f904d66b841ba0e459e09cbd4c, type: 3}
+      propertyPath: _assetId
+      value: 1594145592
+      objectReference: {fileID: 0}
     - target: {fileID: 1703616716954966041, guid: 3136d8f904d66b841ba0e459e09cbd4c, type: 3}
       propertyPath: m_LocalScale.x
       value: 2
@@ -651,6 +663,10 @@ PrefabInstance:
     - target: {fileID: 1015030290870005962, guid: 3136d8f904d66b841ba0e459e09cbd4c, type: 3}
       propertyPath: moveDelay
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1469770164407492475, guid: 3136d8f904d66b841ba0e459e09cbd4c, type: 3}
+      propertyPath: _assetId
+      value: 1594145592
       objectReference: {fileID: 0}
     - target: {fileID: 1703616716954966041, guid: 3136d8f904d66b841ba0e459e09cbd4c, type: 3}
       propertyPath: m_LocalScale.x
@@ -816,6 +832,10 @@ PrefabInstance:
       propertyPath: p2.y
       value: -1.71
       objectReference: {fileID: 0}
+    - target: {fileID: 1469770164407492475, guid: 3136d8f904d66b841ba0e459e09cbd4c, type: 3}
+      propertyPath: _assetId
+      value: 1594145592
+      objectReference: {fileID: 0}
     - target: {fileID: 1703616716954966041, guid: 3136d8f904d66b841ba0e459e09cbd4c, type: 3}
       propertyPath: m_LocalScale.x
       value: 4
@@ -975,6 +995,10 @@ PrefabInstance:
     - target: {fileID: 1015030290870005962, guid: 3136d8f904d66b841ba0e459e09cbd4c, type: 3}
       propertyPath: p2.y
       value: -0.08
+      objectReference: {fileID: 0}
+    - target: {fileID: 1469770164407492475, guid: 3136d8f904d66b841ba0e459e09cbd4c, type: 3}
+      propertyPath: _assetId
+      value: 1594145592
       objectReference: {fileID: 0}
     - target: {fileID: 1703616716954966041, guid: 3136d8f904d66b841ba0e459e09cbd4c, type: 3}
       propertyPath: m_LocalScale.x
@@ -1140,6 +1164,10 @@ PrefabInstance:
       propertyPath: moveDelay
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1469770164407492475, guid: 3136d8f904d66b841ba0e459e09cbd4c, type: 3}
+      propertyPath: _assetId
+      value: 1594145592
+      objectReference: {fileID: 0}
     - target: {fileID: 1703616716954966041, guid: 3136d8f904d66b841ba0e459e09cbd4c, type: 3}
       propertyPath: m_LocalScale.x
       value: 2
@@ -1225,6 +1253,10 @@ PrefabInstance:
     - target: {fileID: 1015030290870005962, guid: 3136d8f904d66b841ba0e459e09cbd4c, type: 3}
       propertyPath: p2.y
       value: -0.87
+      objectReference: {fileID: 0}
+    - target: {fileID: 1469770164407492475, guid: 3136d8f904d66b841ba0e459e09cbd4c, type: 3}
+      propertyPath: _assetId
+      value: 1594145592
       objectReference: {fileID: 0}
     - target: {fileID: 1703616716954966041, guid: 3136d8f904d66b841ba0e459e09cbd4c, type: 3}
       propertyPath: m_LocalScale.x
@@ -1426,6 +1458,10 @@ PrefabInstance:
       propertyPath: affectedDoors.Array.data[0]
       value: 
       objectReference: {fileID: 5701850534558364646}
+    - target: {fileID: 5527016964289431562, guid: 74748567eff9d5844a4f8292beaa5f3a, type: 3}
+      propertyPath: _assetId
+      value: 1594145592
+      objectReference: {fileID: 0}
     - target: {fileID: 7972797656430171263, guid: 74748567eff9d5844a4f8292beaa5f3a, type: 3}
       propertyPath: m_Name
       value: DepressButton (1)
@@ -1763,6 +1799,10 @@ PrefabInstance:
     - target: {fileID: 1015030290870005962, guid: 3136d8f904d66b841ba0e459e09cbd4c, type: 3}
       propertyPath: moveDelay
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1469770164407492475, guid: 3136d8f904d66b841ba0e459e09cbd4c, type: 3}
+      propertyPath: _assetId
+      value: 1594145592
       objectReference: {fileID: 0}
     - target: {fileID: 1703616716954966041, guid: 3136d8f904d66b841ba0e459e09cbd4c, type: 3}
       propertyPath: m_LocalScale.x

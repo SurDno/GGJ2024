@@ -227,6 +227,7 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0
   iceProjectilePrefab: {fileID: 5802137747248827130, guid: f84c2269409d4b14d842cbe25ce6560c, type: 3}
+  freezeRay: {fileID: 8300000, guid: a9d309e29ed40fd4fa4f92cb444b4eda, type: 3}
 --- !u!114 &5739219469038068410
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -243,6 +244,7 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0
   heldObject: {fileID: 0}
+  gravityGun: {fileID: 8300000, guid: 1b53276bec334cf43862f4acff691abd, type: 3}
 --- !u!120 &3798806647762782557
 LineRenderer:
   serializedVersion: 2
