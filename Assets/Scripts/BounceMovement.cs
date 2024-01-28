@@ -7,7 +7,6 @@ public class BounceMovement : MonoBehaviour{
 
     public Vector2 p1, p2;
     public float moveDelay;
-    public int movePointIndex;
     public float speedMultiplier;
 
     /* private void Update()
@@ -43,9 +42,19 @@ public class BounceMovement : MonoBehaviour{
         //     return;
 
         //PingPong between 0 and 1
-        float t = Mathf.PingPong(Time.time * speedMultiplier, 1);
-        transform.position = Vector2.Lerp(p1, p2, t);
+        float t = Mathf.PingPong(Time.time * speedMultiplier, 1f+moveDelay);
+        
+        //implement delay (for platforms that jut out)
+        if(t > 1)
+        {
 
+        }
+        else
+        {
+            transform.position = Vector2.Lerp(p1, p2, t);
+        }
+       
+       
 
 
     }
