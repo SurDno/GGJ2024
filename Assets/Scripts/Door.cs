@@ -4,7 +4,7 @@ using System.Collections;
 
 public class Door : NetworkBehaviour {
     [SerializeField] private AudioClip doorOpenSound;
-
+    [SyncVar] private bool doorFrozen;
 
     [Server]
     public void Open(bool isOpening)
@@ -14,15 +14,16 @@ public class Door : NetworkBehaviour {
 
     private void Update() {
         Animator anim = GetComponentInChildren<Animator>();
-        Debug.Log(FreezeManager.Instance.IsFrozen(anim.gameObject) + " " + FreezeManager.Instance.IsFrozen(this.gameObject));
 
+        if (isServer)
+            doorFrozen = FreezeManager.Instance.IsFrozen(anim.gameObject);
     }
 
     [ClientRpc] 
     public void OpenOnClients(bool isOpening) {
         Animator anim = GetComponentInChildren<Animator>();
 
-        if (FreezeManager.Instance.IsFrozen(anim.gameObject)) {
+        if (doorFrozen) {
             StartCoroutine(WaitForUnfreeze(isOpening));
             return;
         }
@@ -52,7 +53,7 @@ public class Door : NetworkBehaviour {
     IEnumerator WaitForUnfreeze(bool isOpening) {
         Animator anim = GetComponentInChildren<Animator>();
 
-        while (FreezeManager.Instance.IsFrozen(anim.gameObject))
+        while (doorFrozen)
             yield return null;
 
       anim.SetBool("isOpening", isOpening);

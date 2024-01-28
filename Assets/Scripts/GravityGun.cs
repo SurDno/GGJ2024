@@ -124,7 +124,6 @@ public class GravityGun : NetworkBehaviour {
 
     public void Update() {
         DrawRay();
-        Debug.Log(heldObject + " " + FreezeManager.Instance.IsFrozen(heldObject));
 
         if (!isLocalPlayer)
             return;
