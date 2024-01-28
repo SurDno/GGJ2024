@@ -127,4 +127,6 @@ public class PlayerCommon : NetworkBehaviour {
             RespawnOnClients();
         }
     }
+
+    public bool GetRespawning() => isRespawning;
 }

@@ -11,6 +11,9 @@ public class FreezeRay : NetworkBehaviour {
 
 
     public void Update() {
+        if (GetComponent<PlayerCommon>().GetRespawning())
+            return;
+
         if (!isLocalPlayer)
             return;
 

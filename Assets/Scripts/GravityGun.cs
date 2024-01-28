@@ -46,12 +46,16 @@ public class GravityGun : NetworkBehaviour {
         if (heldObject != null) {
             
             
-            Vector2 lerpNextPosition = Vector2.Lerp(heldObject.transform.position, mousePos, .15f);
+            Vector2 lerpNextPosition = Vector2.Lerp(heldObject.transform.position, mousePos, .05f);
+            while (Vector2.Distance(lerpNextPosition, heldObject.transform.position) > 1.5f)
+                lerpNextPosition = Vector2.Lerp(heldObject.transform.position, lerpNextPosition, 0.5f);
+
             direction = mousePos - (Vector2)heldObject.transform.position;
 
             float rotation = Mathf.Lerp(heldObject.transform.eulerAngles.z, 0, .1f * Time.deltaTime);
             rotation = Mathf.Floor(rotation);
             heldObject.transform.eulerAngles = new Vector3(0, 0, rotation);
+
 
             heldObject.GetComponent<Rigidbody2D>().MovePosition(lerpNextPosition);
 
@@ -75,6 +79,11 @@ public class GravityGun : NetworkBehaviour {
     }
 
     public void Update() {
+        if (GetComponent<PlayerCommon>().GetRespawning() || FreezeManager.Instance.IsFrozen(this.gameObject)) {
+            MakeNull(false);
+            return;
+        }
+
         DrawRay();
 
         if (!isLocalPlayer)
