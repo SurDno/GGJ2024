@@ -108,8 +108,8 @@ public class PlayerCommon : NetworkBehaviour {
         isRespawning = true;
         for (int i = 0; i < 7; i++)
         {
-            if(i == 2)
-                transform.position = GameObject.Find("RespawnPoint").transform.position;
+            if (i == 2)
+                MoveToNextCheckpoint();
 
             spriteRenderer.enabled = false;
             yield return new WaitForSeconds(.1f);
@@ -119,6 +119,15 @@ public class PlayerCommon : NetworkBehaviour {
         isRespawning = false;
     }
 
+    public void MoveToNextCheckpoint(bool movingLevel = false)
+    {
+        transform.position = CheckPoints.Instance.GetCurrentCheckPoint();
+        if (movingLevel)
+        {
+            CheckPoints.Instance.ChangeCameraPosition();
+            //Move camera to next position in cameraPosition
+        }
+    }
 
     [ServerCallback]
     private void OnCollisionEnter2D(Collision2D collision) {
@@ -126,7 +135,19 @@ public class PlayerCommon : NetworkBehaviour {
         if (collision.gameObject.CompareTag("Pickup") && collision.contacts[0].normal.y < -0.5f) {
             RespawnOnClients();
         }
+        if (collision.gameObject.CompareTag("CheckPoint"))
+        {
+            CheckPoints.Instance.UpdateCheckPoint();
+        }
+        if (collision.gameObject.CompareTag("Danger"))
+        {
+            Respawn();
+        }
+        if (collision.gameObject.CompareTag("LevelEndCheckPoint"))
+        {
+            CheckPoints.Instance.UpdateCheckPoint();
+            MoveToNextCheckpoint(true);
+            
+        }
     }
-
-    public bool GetRespawning() => isRespawning;
 }
