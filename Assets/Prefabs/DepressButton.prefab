@@ -151,6 +151,7 @@ MonoBehaviour:
   interactingGO: []
   affectedDoors:
   - {fileID: 0}
+  buttonSound: {fileID: 8300000, guid: f33a66ef5b585a341ac0225297be6b64, type: 3}
 --- !u!114 &5527016964289431562
 MonoBehaviour:
   m_ObjectHideFlags: 0

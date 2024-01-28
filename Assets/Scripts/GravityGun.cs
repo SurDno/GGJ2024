@@ -8,6 +8,10 @@ public class GravityGun : NetworkBehaviour {
     [SyncVar] private bool holding;
     private Vector2 direction;
 
+    [SerializeField] private AudioClip gravityGun;
+    private AudioSource gravityGunAudioSource;
+
+
     [Command]
     public void TelepathyStart(Vector2 mousePos) {
         holding = true;
@@ -68,6 +72,40 @@ public class GravityGun : NetworkBehaviour {
 
     }
 
+    private void Awake()
+    {
+        gravityGunAudioSource = gameObject.AddComponent<AudioSource>();
+        gravityGunAudioSource.playOnAwake = false;
+        gravityGunAudioSource.clip = gravityGun;
+
+        gravityGunAudioSource.volume = 0.5f;
+    }
+    private void AdjustAudioSettings()
+    {
+        if (gravityGunAudioSource != null)
+        {
+            
+            gravityGunAudioSource.volume = 0.1f; // Adjust volume here
+            gravityGunAudioSource.pitch = 0.5f;  // Adjust pitch here
+
+        }
+    }
+
+    private void PlayGravityGunSound()
+    {
+        if (gravityGunAudioSource == null)
+        {
+            gravityGunAudioSource = gameObject.AddComponent<AudioSource>();
+        }
+
+        if (gravityGunAudioSource != null)
+        {
+            gravityGunAudioSource.clip = gravityGun;
+            gravityGunAudioSource.Play();
+        }
+    }
+
+
     private void DrawRay() {
         LineRenderer lineRenderer = GetComponent<LineRenderer>();
         lineRenderer.enabled = holding;
@@ -76,6 +114,8 @@ public class GravityGun : NetworkBehaviour {
             cachedMousePos = heldObject.transform.position;
 
         if (lineRenderer.enabled) {
+            AdjustAudioSettings();
+            PlayGravityGunSound();
             lineRenderer.SetPosition(0, transform.position);
             lineRenderer.SetPosition(1, cachedMousePos);
         }
