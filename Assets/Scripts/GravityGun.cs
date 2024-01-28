@@ -40,6 +40,7 @@ public class GravityGun : NetworkBehaviour {
                 //it's colliding with other gameObjects. shouldn't it ignore it!
                 if (backToPlayerHit.collider && backToPlayerHit.collider.gameObject != this.gameObject)
                 {
+                    holding = false;
                     if (heldObject) {
                         heldObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
                         heldObject.GetComponent<Rigidbody2D>().velocity = direction;
@@ -123,11 +124,13 @@ public class GravityGun : NetworkBehaviour {
 
     public void Update() {
         DrawRay();
+        Debug.Log(heldObject + " " + FreezeManager.Instance.IsFrozen(heldObject));
 
         if (!isLocalPlayer)
             return;
 
-        if (GetComponent<PlayerCommon>().GetRespawning() || FreezeManager.Instance.IsFrozen(this.gameObject) || FreezeManager.Instance.IsFrozen(heldObject)) {
+        if (GetComponent<PlayerCommon>().GetRespawning() || FreezeManager.Instance.IsFrozen(this.gameObject) || 
+            (heldObject != null && FreezeManager.Instance.IsFrozen(heldObject))) {
             MakeNull(false);
             return;
         }
@@ -143,7 +146,7 @@ public class GravityGun : NetworkBehaviour {
     [Command]
     private void MakeNull(bool saveDir) {
         holding = false;
-        if (heldObject) {
+        if (heldObject && !FreezeManager.Instance.IsFrozen(heldObject)) {
             heldObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
             heldObject.GetComponent<Rigidbody2D>().velocity = saveDir ? direction : Vector2.zero;
             heldObject.GetComponent<Rigidbody2D>().gravityScale = 1;

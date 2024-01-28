@@ -21,15 +21,18 @@ public class FreezeManager : NetworkBehaviour {
 
     [Server]
     public IEnumerator FrozenObjectCountdown(GameObject collidedObject) {
+        Debug.Log(collidedObject);
 
         Rigidbody2D rb = collidedObject.GetComponent<Rigidbody2D>();
 
         GameObject freezeImageInst = Instantiate(freezeImage, collidedObject.transform.position, Quaternion.identity);
         NetworkServer.Spawn(freezeImageInst);
-
+        
         StoreFrozenObject(collidedObject);
+        frozenObjects.Add(collidedObject);
+
         Vector2 savedVelocity = Vector2.zero;
-        if (!collidedObject.GetComponent<BounceMovement>()) {
+        if (!collidedObject.GetComponent<BounceMovement>() && rb != null) {
             rb.constraints = RigidbodyConstraints2D.FreezeAll;
             savedVelocity = rb.velocity;
             rb.velocity = Vector2.zero;
@@ -38,7 +41,7 @@ public class FreezeManager : NetworkBehaviour {
 
         yield return new WaitForSeconds(freezeTime);
 
-        if (collidedObject.GetComponent<BounceMovement>()) {
+        if (rb == null) {
             //...
         } else if (collidedObject.GetComponent<PlayerCommon>()) {
             rb.constraints = RigidbodyConstraints2D.FreezeRotation;
@@ -50,6 +53,9 @@ public class FreezeManager : NetworkBehaviour {
         }
 
         Destroy(freezeImageInst);
+        frozenObjects.Remove(collidedObject);
+
+        Debug.Log(IsFrozen(collidedObject));
 
         UnstoreFrozenObject(collidedObject);
     }

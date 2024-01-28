@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1581094084010710997}
   m_Layer: 6
   m_Name: DoorObject
-  m_TagString: Door
+  m_TagString: FreezableGround
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -74,7 +74,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 32767
+  m_SortingOrder: 32766
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -219,3 +219,4 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
+  doorOpenSound: {fileID: 8300000, guid: 744be6e71068ce84db7389c18403767b, type: 3}

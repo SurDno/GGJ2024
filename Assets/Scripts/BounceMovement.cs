@@ -2,10 +2,15 @@ using Mirror;
 using UnityEngine;
 
 public class BounceMovement : NetworkBehaviour {
-    public Vector2 p1, p2;
+    private Vector2 p1, p2;
+    public Transform otherPos;
     public float moveDelay;
     public float speedMultiplier;
 
+    private void Start() {
+        p1 = transform.position;
+        p2 = otherPos.transform.position;
+    }
     void Update()  {
         if (!isServer)
             return;
